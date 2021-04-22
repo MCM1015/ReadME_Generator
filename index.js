@@ -1,6 +1,8 @@
-// TODO: Include packages needed for this application
+// Packages needed for this application
 const inquirer = require('inquirer');
 const fs = require('fs');
+const generateMarkdown = require('./utils/generateMarkdown.js');
+
 
 // Array of questions for user input
 const questions = [
@@ -25,13 +27,14 @@ const questions = [
         message: 'Enter usage instructions.'
     },
     {
-        type: 'input',
+        type: 'list',
         name: 'license',
-        message: 'Choose a license for this project'
+        message: 'Choose a license for this project',
+        choices: ['MIT', 'ISC', 'IPL-1.0', 'EPL-1.0', 'Apache-2.0', 'None']
     },
     {
         type: 'input',
-        name: 'contribution',
+        name: 'contributing',
         message: 'Enter contribution information/guidelines.'
     },
     {
@@ -48,67 +51,25 @@ const questions = [
         type: 'input',
         name: 'questionsemail',
         message: 'What is your email address?'
-    }];
+    }]
 
-// TODO: Create a function to write README file
-const writeToFile = (data) =>
-`# ${data.project}
 
-${data.license}
+// Function to write README file
+function writeToFile(fileName, data) {
 
-## Description
-${data.description}.
-
-## Table of Contents
--Installation
-
--Usage
-
--License
-
--Contribution
-
--Tests
-
--Questions
-
-## Installation
-To install the required dependencies run the following command:
-
-    ${data.installation}
-    
-## Usage
-${data.usage}.
-
-## License 
-This project is licensed under the ${data.license} license.
-
-## Contribution
-${data.contribution}.
-
-## Test
-To run test(s), run the following command:
-
-    ${data.test}
-
-## Questions
-If you have any questions or need to contact me directly please email me at:
-${data.questionsemail}
-
-If you would like to see some of my other projects feel free to checkout my GitHub at:
-[${data.questionsgithub}](https://github.com/${data.questionsgithub})
-`;
-
-inquirer.prompt(questions).then((data) => {
-    fs.writeFile('ReadME.MD', writeToFile(data), (error) =>
+    fs.writeFile(fileName, data, (error) =>
         error ? console.log(error) : console.log('Successfully created ReadME.MD!')
     );
-});
+}
 
 
-// TODO: Create a function to initialize app
-
+// Function to initialize app
+function init() {
+    inquirer.prompt(questions).then((data) => {
+        writeToFile('./example/README.md', generateMarkdown(data));
+    });
+}
 
 
 // Function call to initialize app
-//init();
+init();
