@@ -1,6 +1,6 @@
 # ReadME Generator
 
-  ![License](https://img.shields.io/badge/License-MIT-blue.svg)
+  [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
   ## Description
   Auto Generate a readme file by answering a series of questions about a project in a command-line application.
